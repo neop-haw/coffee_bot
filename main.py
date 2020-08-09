@@ -15,40 +15,55 @@ client = commands.Bot(command_prefix='!')
 
 @client.event
 async def on_ready():
+
     print('Bot is ready!\n')
 
 
 @client.event
 async def on_member_join(member):
+
     print(f'{member} has joined a server.')
 
 
 @client.event
 async def on_member_remove(member):
+
     print(f'{member} has left a server.')
+
+
+@client.event
+async def on_message(message):
+	"""This fuction is the meaning of bot's life!"""
+
+	if message.author == client.user:
+		return
+
+	coffee = ['coffee', 'кофе']
+	lst = [word.lower() for word in message.content.split(' ')]
+	print(lst)
+	if set(coffee) & set(lst):
+		await message.channel.send('КОФЕ')
+
 
 
 # Commands to use (e.g. !foo [...])
 
 @client.command()
 async def ping(ctx):
+
     await ctx.send(f'Pong! {round(client.latency * 1000)}ms')
 
 
 @client.command(alieses=['coffee'])
-async def coffee(ctx, message):
+async def coffee(context, message):
+
     responses = ['I want some coffee.',
                  'Gimme coffee!',
                  'I want more coffee!!',
                  'Coffee?',
                  'Let\'s have some coffee']
 
-    if 'coffee' in [x.lower() for x in message.split(' ')]:
-    	await ctx.send('COFFEE')
-    else:
-    	await ctx.send('There is no COFFEE')
-
-    await ctx.send(f'{random.choice(responses)}')
+    await context.send(f'{random.choice(responses)}')
 
 
 # Run bot
