@@ -4,6 +4,11 @@ import discord
 from discord.ext import commands
 import config
 import random
+import re	# Seachring 'coffee'
+
+# Sending images
+# import json
+# import requests
 
 
 # Main bot client
@@ -21,8 +26,11 @@ async def on_ready():
 
 @client.event
 async def on_member_join(member):
+	await member.create_dm()
+	await member.dm_channel.send(
+		f'```Привет, {member.name}!\nДобро пожаловать на Кофе-сервер!\nЗдесь ты можешь общаться с участниками сервера и играть с ними.\nА самое главное здесь - это КОФЕ!! Если ты любишь кофе, то этот сервер для тебя!\nЖелаем приятного развлечения и кофепития!```')
 
-    print(f'{member} has joined a server.')
+	print(f'{member} has joined a server.')
 
 
 @client.event
@@ -38,12 +46,14 @@ async def on_message(message):
 	if message.author == client.user:
 		return
 
-	coffee = ['coffee', 'кофе']
-	lst = [word.lower() for word in message.content.split(' ')]
-	print(lst)
-	if set(coffee) & set(lst):
-		await message.channel.send('КОФЕ')
+	# coffee = ['coffee', 'кофе']
+	# lst = [word.lower() for word in message.content.split(' ')]
+	# print(lst)
 
+	find = re.search(r'кофе', message.content.lower())
+
+	if find:
+		await message.channel.send(f'**КОФЕ** :coffee:')
 
 
 # Commands to use (e.g. !foo [...])
@@ -51,19 +61,29 @@ async def on_message(message):
 @client.command()
 async def ping(ctx):
 
-    await ctx.send(f'Pong! {round(client.latency * 1000)}ms')
+    await ctx.send(f'Your ping is {round(client.latency * 1000)}ms')
 
 
-@client.command(alieses=['coffee'])
-async def coffee(context, message):
+# @client.command(alieses=['coffee'])
+# async def coffee(context, message):
 
-    responses = ['I want some coffee.',
-                 'Gimme coffee!',
-                 'I want more coffee!!',
-                 'Coffee?',
-                 'Let\'s have some coffee']
+#     responses = ['I want some coffee.',
+#                  'Gimme coffee!',
+#                  'I want more coffee!!',
+#                  'Coffee?',
+#                  'Let\'s have some coffee']
 
-    await context.send(f'{random.choice(responses)}')
+#     await context.send(f'{random.choice(responses)}')
+
+
+@client.command(alieses=['кофе', 'coffee'])
+async def coffee(ctx):
+	"""Fuction activates Coffee-Time!
+
+	Everybody have to drink at least a cup coffee!
+	"""
+
+	pass
 
 
 # Run bot
