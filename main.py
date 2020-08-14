@@ -26,11 +26,16 @@ async def on_ready():
 
 @client.event
 async def on_member_join(member):
+	print(f'{member} has joined a server.')
+
+	wlcm_embed = discord.Embed(colour='0xF2E41F',
+		url='https://sun9-65.userapi.com/HsRPSsFPIEVEpTTUajNunzKvhTTCL5p2nGaPTA/FtRuqIRZOfE.jpg',
+		title='ДОБРО ПОЖАЛОВАТЬ!'
+		)
+
 	await member.create_dm()
 	await member.dm_channel.send(
-		f'```Привет, {member.name}!\nДобро пожаловать на Кофе-сервер!\nЗдесь ты можешь общаться с участниками сервера и играть с ними.\nА самое главное здесь - это КОФЕ!! Если ты любишь кофе, то этот сервер для тебя!\nЖелаем приятного развлечения и кофепития!```')
-
-	print(f'{member} has joined a server.')
+		f'```Привет, {member.name}!\nДобро пожаловать на Кофе-сервер!\nЗдесь ты можешь общаться с участниками сервера и играть с ними.\nА самое главное здесь - это КОФЕ!! Если ты любишь кофе, то этот сервер для тебя!\nЖелаем приятного развлечения и кофепития!```', embed=wlcm_embed)
 
 
 @client.event
