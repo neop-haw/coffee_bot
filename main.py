@@ -29,7 +29,7 @@ async def on_member_join(member):
 	print(f'{member} has joined a server.')
 
 	wlcm_embed = discord.Embed(colour='0xF2E41F',
-		url='https://sun9-65.userapi.com/HsRPSsFPIEVEpTTUajNunzKvhTTCL5p2nGaPTA/FtRuqIRZOfE.jpg',
+		url=config.wlcm_img,
 		title='ДОБРО ПОЖАЛОВАТЬ!'
 		)
 
@@ -44,28 +44,27 @@ async def on_member_remove(member):
     print(f'{member} has left a server.')
 
 
-@client.event
-async def on_message(message):
-	"""This fuction is the meaning of bot's life!"""
+# @client.event
+# async def on_message(message):
+# 	"""This fuction is the meaning of bot's life!"""
 
-	if message.author == client.user:
-		return
+# 	if message.author == client.user:
+# 		return
 
-	# coffee = ['coffee', 'кофе']
-	# lst = [word.lower() for word in message.content.split(' ')]
-	# print(lst)
+# 	# coffee = ['coffee', 'кофе']
+# 	# lst = [word.lower() for word in message.content.split(' ')]
+# 	# print(lst)
 
-	find = re.search(r'кофе', message.content.lower())
+# 	find = re.search(r'кофе', message.content.lower())
 
-	if find:
-		await message.channel.send(f'**КОФЕ** :coffee:')
+# 	if find:
+# 		await message.channel.send(f'**КОФЕ** :coffee:')
 
 
 # Commands to use (e.g. !foo [...])
 
-@client.command()
+@client.command(pass_context=True)
 async def ping(ctx):
-
     await ctx.send(f'Your ping is {round(client.latency * 1000)}ms')
 
 
@@ -89,6 +88,13 @@ async def coffee(ctx):
 	"""
 
 	pass
+
+
+@client.command(alieses=['пикча', 'рандом', 'random'])
+async def pic(ctx):
+	rndm_embed = discord.Embed(url=f'{random.choice(config.rndm_imgs)}')
+
+	await ctx.send(embed=rndm_embed)
 
 
 # Run bot
