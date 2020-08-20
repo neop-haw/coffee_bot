@@ -68,24 +68,14 @@ async def on_message(message):
 
 @client.command(pass_context=True)
 async def ping(ctx):
-    await ctx.send(f'Your ping is {round(client.latency * 1000)}ms')
+	"""Спросить задержку на сервере."""
 
-
-# @client.command(alieses=['coffee'])
-# async def coffee(context, message):
-
-#     responses = ['I want some coffee.',
-#                  'Gimme coffee!',
-#                  'I want more coffee!!',
-#                  'Coffee?',
-#                  'Let\'s have some coffee']
-
-#     await context.send(f'{random.choice(responses)}')
+	await ctx.send(f'Ваш пинг - {round(client.latency * 1000)}ms')
 
 
 @client.command(alieses=['кофе', 'coffee'])
 async def coffee(ctx):
-	"""Fuction activates Coffee-Time!
+	"""Объявить Кофе-тайм и позвать всех на кофе!
 
 	Everybody have to drink at least a cup coffee!
 	"""
@@ -95,9 +85,16 @@ async def coffee(ctx):
 
 @client.command(alieses=['пикча', 'рандом', 'random'])
 async def pic(ctx):
-	rndm_embed = discord.Embed(url=f'{random.choice(config.rndm_imgs)}')
+	"""Попросить рандомную картинку."""
 
-	await ctx.send(embed=rndm_embed)
+	f_path = random.choice(config.imgs_paths)
+	f_name = f_path.split('/')[-1]
+	image = discord.File(f_path, filename=f_name)
+
+	rndm_embed = discord.Embed()
+	rndm_embed.set_image(url=f'attachment://{f_name}')
+
+	await ctx.channel.send(file=image, embed=rndm_embed)
 
 
 # Run bot
