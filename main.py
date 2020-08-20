@@ -3,6 +3,7 @@
 import discord
 from discord.ext import commands
 import config
+import local_data
 import random
 import re	# Seachring 'coffee'
 
@@ -29,7 +30,7 @@ async def on_member_join(member):
 	print(f'{member} has joined a server.')
 
 	wlcm_embed = discord.Embed(colour='0xF2E41F',
-		url=config.wlcm_img,
+		url=local_data.wlcm_img,
 		title='ДОБРО ПОЖАЛОВАТЬ!'
 		)
 
@@ -87,7 +88,7 @@ async def coffee(ctx):
 async def pic(ctx):
 	"""Попросить рандомную картинку."""
 
-	f_path = random.choice(config.imgs_paths)
+	f_path = random.choice(local_data.imgs_paths)
 	f_name = f_path.split('/')[-1]
 	image = discord.File(f_path, filename=f_name)
 
