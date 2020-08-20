@@ -44,21 +44,24 @@ async def on_member_remove(member):
     print(f'{member} has left a server.')
 
 
-# @client.event
-# async def on_message(message):
-# 	"""This fuction is the meaning of bot's life!"""
+@client.event
+async def on_message(message):
+	"""This fuction is the meaning of bot's life!"""
 
-# 	if message.author == client.user:
-# 		return
+	print(f'{message.author} ({message.author.display_name}) : {message.content}')
 
-# 	# coffee = ['coffee', 'кофе']
-# 	# lst = [word.lower() for word in message.content.split(' ')]
-# 	# print(lst)
+	if message.author == client.user:
+		return
 
-# 	find = re.search(r'кофе', message.content.lower())
+	coffee = ['coffee', 'кофе']
+	lst = [word.lower() for word in message.content.split(' ')]
 
-# 	if find:
-# 		await message.channel.send(f'**КОФЕ** :coffee:')
+	find = re.search(r'кофе', message.content.lower())
+
+	if find:
+		await message.channel.send(f'**КОФЕ** :coffee:')
+
+	await client.process_commands(message)
 
 
 # Commands to use (e.g. !foo [...])
